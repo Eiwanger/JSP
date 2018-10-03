@@ -1,0 +1,41 @@
+<!--%@ page contentType="text/html;charset=UTF-8" language="java" %-->
+<!--This is the HTML form -->
+  <html>
+  <head>
+    <title>Forum</title>
+      <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+  <h1>Forum</h1>
+  <form action="fs" method="POST">
+    <input type="submit" VALUE="Go to Forum" name="action">
+  </form>
+  <form action="fs" method="POST">
+    <table>
+      <tr><td>User Name</td><td><input type="text" size="40" name="userName" ></td></tr>
+      <tr><td>Message</td><td> <!--<input type="text" size="40"  name="message" >-->
+      <textarea name="message" rows="3" cols="38"></textarea>
+      </td></tr>
+      <tr><td></td><td><input type="submit" VALUE="Submit" name="action"> </td></tr>
+    </table>
+
+  </form>
+  <form action="fs" method="POST">
+      <input type="submit" VALUE="Delete Forum" name="action">
+  </form>
+  <h3> Search by: </h3>
+  <table>
+  <form action="fs" method="GET">
+      <tr><td>Name</td><td><input type="text" size="40" name="sName" ></td>
+      <td><input type="submit" VALUE="Search Name" name="action"> </td></tr>
+  </form>
+      <form action="fs" method="GET">
+          <tr><td>Date</td><td><input type="date" size="40" name="sDate" ></td>
+      <td><input type="submit" VALUE="Search Date" name="action"> </td></tr>
+      </form>
+  </table>
+
+
+  </body>
+  </html>

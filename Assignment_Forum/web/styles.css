@@ -1,0 +1,13 @@
+    p
+    {
+    color:black; font-family:Arial;
+    }
+    body
+    {
+    background-color: wheat;
+    }
+    textarea
+    {
+        width: 100%;
+        box-sizing: border-box;
+    }
