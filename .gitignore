@@ -1,0 +1,10 @@
+#ignore
+
+*.iml
+webApp/lib
+webApp/out
+
+ProjectOne
+
+Assignment_Forum/out
+Assignment_Forum/web/images
