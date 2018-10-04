@@ -10,7 +10,6 @@ public class Message {
     private String date;
     private String message;
 
-
     private static ArrayList<Message> MessageList = new ArrayList<>();
 
     // Constructors
@@ -147,7 +146,6 @@ public class Message {
     public void setMessage(String message) {
         this.message = message;
     }
-
 
 
 }
