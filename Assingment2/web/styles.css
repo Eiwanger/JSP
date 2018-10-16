@@ -1,0 +1,40 @@
+p {
+    color: black;
+    font-family: Arial;
+}
+
+body {
+    background-color: white;
+}
+
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+table .poststyle {
+    border-width: 2px;
+    border-style: solid;
+    padding: 10px;
+    border-collapse: collapse;
+}
+
+table .logstyle {
+    width: 100%;
+}
+
+.topright {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+}
+
+.container {
+    position: relative;
+}
+
+div.relative {
+    position: relative;
+    left: 30%;
+}
