@@ -71,29 +71,31 @@ public class LoginServlet extends HttpServlet {
 
 
             out.println(LoginController.createServlet(action, username, password));
+            if(!(action==null)) {
+                if (action.equalsIgnoreCase("register")) {
+                    response.sendRedirect("regist.html");
+                    return;
+                    // test if return changes something
+                }
+                if (LoginController.checkIfEmpty(username) && LoginController.checkIfEmpty(password)
+                        && LoginController.checkLogin(username, password)) {
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("forum.html");
 
-            if (action.equalsIgnoreCase("register")) {
-                response.sendRedirect("regist.html");
-                return;
-                // test if return changes something
-                           }
-            if (LoginController.checkIfEmpty(username) && LoginController.checkIfEmpty(password)
-                    && LoginController.checkLogin(username, password)) {
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("forum.html");
-
-                HttpSession mySession = request.getSession();
-                mySession.setAttribute("username", username);
+                    HttpSession mySession = request.getSession();
+                    mySession.setAttribute("username", username);
 
 
-                requestDispatcher.forward(request, response);
+                    requestDispatcher.forward(request, response);
+                }
+
+                if (action.equalsIgnoreCase("login") && !LoginController.checkLogin(username, password)
+                        && LoginController.checkIfEmpty(username) && LoginController.checkIfEmpty(password)) {
+                    out.println("<p>User name or password wrong</p>");
+                }
+                out.println("</body></html>");
+
+
             }
-
-            if (action.equalsIgnoreCase("login") && !LoginController.checkLogin(username, password)
-                    && LoginController.checkIfEmpty(username) && LoginController.checkIfEmpty(password)) {
-                out.println("<p>User name or password wrong</p>");
-            }
-            out.println("</body></html>");
-
             out.close();
         }
 

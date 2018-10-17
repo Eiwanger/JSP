@@ -14,21 +14,19 @@ public class Message {
     private String message;
 
 
-    String favView[];
-    String favSport[];
+    LinkedList<String> favView;
+    LinkedList<String> favSport;
 
 
     // Constructors
-    public Message(){
+    public Message() {
 
-   }
+    }
 
-    public Message(String name, String date, String message, String favouriteView[], String favSports[])
-    {
-        if(name.isEmpty())
-        {
+    public Message(String name, String date, String message, LinkedList<String> favouriteView, LinkedList<String> favouriteSports) {
+        if (name.isEmpty()) {
             this.name = "No User";
-        }else{
+        } else {
             this.name = name;
         }
         this.date = date;
@@ -36,7 +34,8 @@ public class Message {
         this.message = message;
 
         this.favView = favouriteView;
-        this.favSport= favSports;
+
+        this.favSport = favouriteSports;
     }
 
 
@@ -56,6 +55,10 @@ public class Message {
 
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -64,29 +67,36 @@ public class Message {
         this.message = message;
     }
 
-    public String getFavViews()
-    {
+    public String getFavViewAtIndex(int i) {
+        return favView.get(i);
+    }
+
+    public String getFavSportAtIndex(int i) {
+        return favSport.get(i);
+    }
+
+
+    public String getFavViews() {
         String views = "";
-if(!(favView == null)) {
-    for (int i = 0; i < favView.length; i++) {
-        views += favView[i] + " | ";
-    }
-    return views.substring(0, views.length()-3);
-}
-    return views;
+        if (!(favView == null) && !favView.isEmpty()) {
+            for (String s : favView) {
+                views += s + " | ";
+            }
+            return views.substring(0, views.length() - 3);
+        }
+        return views;
 
     }
 
-    public String getFavSports()
-    {
+    public String getFavSports() {
 
         String sports = "";
-if(!(favSport == null)) {
-    for (int i = 0; i < favSport.length; i++) {
-        sports += favSport[i] + " | ";
-    }
-    return sports.substring(0, sports.length()-3);
-}
+        if (!(favSport == null) && !favSport.isEmpty()) {
+            for (String s : favSport) {
+                sports += s + " | ";
+            }
+            return sports.substring(0, sports.length() - 3);
+        }
 
 
         return sports;

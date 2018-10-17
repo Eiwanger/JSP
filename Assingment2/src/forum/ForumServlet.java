@@ -12,6 +12,7 @@ public class ForumServlet extends HttpServlet {
 
     public void init() {
         MessageController.initLogFile();
+        MessageController.readMsgLogFile();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,8 +44,20 @@ public class ForumServlet extends HttpServlet {
             HttpSession mySession = request.getSession();
             // String username = (String)mySession.getAttribute("username");
             String message[] = parameterMap.get("message");
+            LinkedList<String> views = new LinkedList<>();
+            if(parameterMap.get(views) != null) {
+                for (String s : parameterMap.get("views")) {
+                    views.add(s);
+                }
+            }
+            LinkedList<String> sports = new LinkedList<>();
+            if(parameterMap.get("sports")!= null) {
 
-            Message m = new Message(username[0], MessageController.setCurrentDate(), message[0], parameterMap.get("views"), parameterMap.get("sports"));
+                for (String s : parameterMap.get("sports")) {
+                    sports.add(s);
+                }
+            }
+            Message m = new Message(username[0], MessageController.setCurrentDate(), message[0], views, sports);
             MessageController.addToList(m);
 
 

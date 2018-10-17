@@ -88,9 +88,14 @@ public class ForumPageServlet extends HttpServlet {
                         "<form action=\"fs\" method=\"POST\">" +
                         "    <table>" +
                         "        <tr>" +
-                        "            <td>" +
-                        "                <input type=\"submit\" VALUE=\"Delete Forum\" name=\"action\">" +
-                        "            </td>" +
+                        "            <td>" );
+
+
+                                if(username.equals("admin")){
+                                    out.println("                <input type=\"submit\" VALUE=\"Delete Forum\" name=\"action\">");
+                                }
+
+                   out.println("            </td>" +
                         "        </tr>" +
                         "    </table>" +
                         "</form>" +
