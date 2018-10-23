@@ -30,8 +30,12 @@ public class MessageController {
 
     private static String fileName = "forumLog.xml";
     static String logFilePath = ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath() + separator + folder + separator + fileName;
+    private static File f = new File(ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     private static File logFile;
 
+    private static String htmlHead ="<html><head><link rel=\"stylesheet\" " +
+            "type='text/css' href=\"styles.css\"></head><body>" +
+            "<table id='t01'><tbody>";
 
     private static ArrayList<Message> MessageList = new ArrayList<>();
 
@@ -55,21 +59,21 @@ public class MessageController {
                 Node root = doc.createElement("posts");
                 doc.appendChild(root);
 
-                saveXMLFile(doc);
+                saveXMLFile(doc, logFilePath);
             }
         } catch (ParserConfigurationException p) {
             p.printStackTrace();
         }
     }
 
-    public static void saveXMLFile(Document doc) {
+    public static void saveXMLFile(Document doc, String path) {
         try {
             doc.getDocumentElement().normalize();
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            /*String filePathXSL = f.toString().replaceAll("classes", "strip-space.xsl");*/
-            Transformer transformer = transformerFactory.newTransformer(/*new StreamSource(filePathXSL)*/);
+            String filePathXSL = f.toString().replaceAll("classes", "strip-space.xsl");
+            Transformer transformer = transformerFactory.newTransformer(new StreamSource(filePathXSL));
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(logFilePath));
+            StreamResult result = new StreamResult(new File(path));
 
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(source, result);
@@ -187,7 +191,7 @@ public class MessageController {
 
 
             root.appendChild(post);
-            saveXMLFile(doc);
+            saveXMLFile(doc, logFilePath);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -222,8 +226,8 @@ public class MessageController {
             msg.setName(element.getAttribute("name"));
             msg.setDate(element.getAttribute("date"));
             msg.setMessage(element.getAttribute("msg"));
-            // error somewhere after this comment
             if (element.hasChildNodes()) {
+
                 msg.favView = getChildNodes(element, "favViews");
                 msg.favSport = getChildNodes(element, "favSports");
 
@@ -236,6 +240,11 @@ public class MessageController {
     private static LinkedList<String> getChildNodes(Element element, String tagname) {
         LinkedList<String> taglist = new LinkedList<>();
         try {
+
+            if(element.getElementsByTagName(tagname).getLength() == 0){
+                return taglist;
+            }
+
             NodeList tags = element.getElementsByTagName(tagname).item(0).getChildNodes();
 
 
@@ -251,6 +260,7 @@ public class MessageController {
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
+
             return taglist;
         }
         return taglist;
@@ -285,10 +295,11 @@ public class MessageController {
     // print functions
     private static String singleOutput(Message m) {
         String returnString = "";
-        returnString += "<tr><td class=\"poststyle\">";
-        returnString += "<h3>" + m.getName() + "</h3></td><td class=\"poststyle\">" + m.getMessage() + "</td></tr>\n";
+        returnString += "<tr><td class=\"poststyle\" style width='15%'>";
+        returnString += "<h3>" + m.getName() + "</h3></td>" +
+                "<td class=\"poststyle\" rowspan='2' text-align='left'>" + m.getMessage() + "</td></tr>\n";
 
-        returnString += "<tr><td class=\"poststyle\">" + m.getDate() + "</td></tr>\n";
+        returnString += "<tr><td class=\"poststyle\" style width='15%'>" + m.getDate() + "</td></tr>\n";
 
         if (!m.getFavViews().isEmpty()) {
             returnString += "<tr><td></td><td class=\"poststyle\"> Favourite Views: ";
@@ -305,10 +316,8 @@ public class MessageController {
 
     public static String printSearchedMessages(ArrayList<Message> msgList, String input) {
         String returnString = "";
-        returnString += "<html>";
-        returnString += "<head><link rel=\"stylesheet\" href=\"styles.css\"></head>";
-        returnString += "<body>";
-        returnString += "<table><tbody>";
+        returnString += htmlHead;
+
         if (msgList.isEmpty()) {
             returnString += "<p> no results for your search </p>";
         } else {
@@ -331,10 +340,7 @@ public class MessageController {
 
     public static String printAllMessages() {
         String returnString = "";
-        returnString += "<html>";
-        returnString += "<head><link rel=\"stylesheet\" href=\"styles.css\"></head>";
-        returnString += "<body>";
-        returnString += "<table><tbody>";
+        returnString += htmlHead;
 
         if (MessageList.isEmpty()) {
             returnString += "<p>no posts available</p>";

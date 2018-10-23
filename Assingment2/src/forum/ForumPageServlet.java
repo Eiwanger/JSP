@@ -53,7 +53,7 @@ public class ForumPageServlet extends HttpServlet {
                         "        <tr>" +
                         "            <td>Message</td>" +
                         "            <td> <!--<input type=\"text\" size=\"40\"  name=\"message\" >-->" +
-                        "                <textarea name=\"message\" rows=\"3\" cols=\"38\"></textarea>" +
+                        "                <textarea placeholder='Write here your message till 200 characters' maxlength='200' name=\"message\" rows=\"3\" cols=\"38\"></textarea>" +
                         "            </td>" +
                         "        </tr>" +
                         "    </table>" +
@@ -88,36 +88,39 @@ public class ForumPageServlet extends HttpServlet {
                         "<form action=\"fs\" method=\"POST\">" +
                         "    <table>" +
                         "        <tr>" +
-                        "            <td>" );
+                        "            <td>");
 
+        try {
+            if (username.equals("admin")) {
+                out.println("                <input type=\"submit\" VALUE=\"Delete Forum\" name=\"action\">");
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
-                                if(username.equals("admin")){
-                                    out.println("                <input type=\"submit\" VALUE=\"Delete Forum\" name=\"action\">");
-                                }
-
-                   out.println("            </td>" +
-                        "        </tr>" +
-                        "    </table>" +
-                        "</form>" +
-                        "<h3> Search by: </h3>" +
-                        "<table>" +
-                        "    <form action=\"fs\" method=\"GET\">" +
-                        "        <tr>" +
-                        "            <td>Name</td>" +
-                        "            <td><input type=\"text\" size=\"40\" name=\"sName\"></td>" +
-                        "            <td><input type=\"submit\" VALUE=\"Search Name\" name=\"action\"></td>" +
-                        "        </tr>" +
-                        "    </form>" +
-                        "    <form action=\"fs\" method=\"GET\">" +
-                        "        <tr>" +
-                        "            <td>Date</td>" +
-                        "            <td><input type=\"date\" size=\"40\" name=\"sDate\"></td>" +
-                        "            <td><input type=\"submit\" VALUE=\"Search Date\" name=\"action\"></td>" +
-                        "        </tr>" +
-                        "    </form>" +
-                        "</table>" +
-                        "</body>" +
-                        "</html>");
+        out.println("            </td>" +
+                "        </tr>" +
+                "    </table>" +
+                "</form>" +
+                "<h3> Search by: </h3>" +
+                "<table>" +
+                "    <form action=\"fs\" method=\"GET\">" +
+                "        <tr>" +
+                "            <td>Name</td>" +
+                "            <td><input type=\"text\" size=\"40\" name=\"sName\"></td>" +
+                "            <td><input type=\"submit\" VALUE=\"Search Name\" name=\"action\"></td>" +
+                "        </tr>" +
+                "    </form>" +
+                "    <form action=\"fs\" method=\"GET\">" +
+                "        <tr>" +
+                "            <td>Date</td>" +
+                "            <td><input type=\"date\" size=\"40\" name=\"sDate\"></td>" +
+                "            <td><input type=\"submit\" VALUE=\"Search Date\" name=\"action\"></td>" +
+                "        </tr>" +
+                "    </form>" +
+                "</table>" +
+                "</body>" +
+                "</html>");
     }
 }
 

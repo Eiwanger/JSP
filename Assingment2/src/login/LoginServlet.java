@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 
+import javax.print.DocFlavor;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,18 +47,24 @@ public class LoginServlet extends HttpServlet {
 
         if (action.equalsIgnoreCase("create account")) {
             out.println("<html><head>");
-            out.println("<title>User Login Page</title>");
+            out.println("<title>User Register Page</title>");
             out.println("<link rel='stylesheet' type='text/css' href='styles.css'>");
             out.println("</head><body>");
             out.println("<h2>Registration</h2>");
-            try {
-                if (LoginController.registUser(username, password)) {
-                    out.println("<p>Account successfully created</p>");
-                }
-            } catch (UserInputException Ui) {
-                out.println("<p>" + Ui.getMessage() + "</p>");
-            }
 
+            Map<String, String[]> registerMap =  request.getParameterMap();
+            String passwords[] = registerMap.get("password");
+            if(passwords[0].equals(passwords[1])) {
+                try {
+                    if (LoginController.registUser(username, password)) {
+                        out.println("<p>Account successfully created</p>");
+                    }
+                } catch (UserInputException Ui) {
+                    out.println("<p>" + Ui.getMessage() + "</p>");
+                }
+            }else{
+                out.println("<p>Registration failed, passwords didn't match</p>");
+            }
             out.println("<br><a href='login.html'>Back</a>");
             out.println("</body></html>");
 

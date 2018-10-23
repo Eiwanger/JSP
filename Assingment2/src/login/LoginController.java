@@ -1,7 +1,15 @@
 package login;
 
 import forum.ForumServlet;
+import forum.MessageController;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.security.CryptoPrimitive;
 import java.security.MessageDigest;
@@ -10,7 +18,7 @@ import java.util.HashMap;
 
 public class LoginController {
 
-    private static String fileName = "userData.txt";
+    private static String fileName = "userData.xml";
     private static String userDataPath;
     private static File userDataFile;
     private static String folder = "UserData";
@@ -25,16 +33,28 @@ public class LoginController {
     public static void initUserDataFile() {
         separator = System.getProperty("file.separator");
         userDataPath = LoginController.class.getProtectionDomain().getCodeSource().getLocation().getPath()
-                + separator + folder + separator;
+                + separator + folder + separator+ fileName;
         userDataFile = new File(userDataPath);
-        if (!userDataFile.exists()) {
-            userDataFile.mkdir();
+        try {
+
+            if (!userDataFile.exists()) {
+
+                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+                Document doc = docBuilder.newDocument();
+                Node root = doc.createElement("Users");
+                doc.appendChild(root);
+
+                MessageController.saveXMLFile(doc, userDataPath);
+            }
+        } catch (ParserConfigurationException p) {
+            p.printStackTrace();
         }
-        userDataPath = userDataFile + separator + fileName;
+
     }
 
     private static void addUserToFile(String username, String passwordHash) {
-        String log = username + "   " + passwordHash + "\n";
+/*        String log = username + "   " + passwordHash + "\n";
 
         try {
             fileWriter = new FileWriter(userDataPath, true);
@@ -43,7 +63,26 @@ public class LoginController {
         } catch (IOException e) {
 
         }
+*/
+        Node user = null;
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(userDataPath);
+            Node root = doc.getDocumentElement();
+            user = doc.createElement("user");
 
+            ((Element) user).setAttribute("username", username);
+            ((Element) user).setAttribute("password", passwordHash);
+
+
+
+
+            root.appendChild(user);
+            MessageController.saveXMLFile(doc, userDataPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean registUser(String nUserName, String nPassword) throws UserInputException {
@@ -54,6 +93,19 @@ public class LoginController {
         if (UserLogin.containsKey(nUserName)) {
             throw new UserInputException("User already exists");
         }
+        if(nUserName.length() < 3)
+        {
+            throw new UserInputException("Username to short! Write at least 3 letters!");
+        }
+        if(!nUserName.matches("^[a-zA-Z0-9]*$")){
+            throw new UserInputException("No special letters allowed in Username");
+        }
+        if(nPassword.length() < 4)
+        {
+            throw new UserInputException(("Unsafe password! Use at least 4 letters"));
+        }
+
+
 
         addUser(nUserName, nPassword);
         return true;
@@ -66,7 +118,7 @@ public class LoginController {
     }
 
     protected static void collectData() {
-        String tmp;
+/*        String tmp;
         int border;
         try {
             fileReader = new FileReader(userDataPath);
@@ -78,6 +130,27 @@ public class LoginController {
         } catch (IOException e) {
 
         }
+*/
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(userDataPath);
+            Node root = doc.getDocumentElement();
+            NodeList nodeList = doc.getElementsByTagName("user");
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node tmp = nodeList.item(i);
+                if (tmp.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element element = (Element)tmp;
+                    UserLogin.put(element.getAttribute("username"), element.getAttribute("password"));
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static boolean checkUsername(String username) {

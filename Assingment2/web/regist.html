@@ -8,11 +8,26 @@
 <h1>Create Account</h1>
 <form action="login.html" method="POST">
     <table>
-        <tr><td>User Name</td><td><input type="text" size="40" name="userName" ></td></tr>
-        <tr><td>Password</td><td><input type="password" size="40" name="password" ></td></tr>
-
-        <tr><td></td><td><input type="submit" name="action" VALUE="Create Account"> </td></tr>
+        <tr>
+            <td>User Name</td>
+            <td><input type="text" size="40" name="userName"></td>
+            <td><p>No special letters. At least 3 letters</p></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" size="40" name="password"></td>
+            <td><p>At least 4 letters.</p></td>
+        </tr>
+        <tr>
+            <td>Password repeat</td>
+            <td><input type="password" size="40" name="password"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" name="action" VALUE="Create Account"></td>
+        </tr>
     </table>
+    <br><a href='login.html'>Back</a>
 
 </form>
 </body>

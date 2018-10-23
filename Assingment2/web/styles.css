@@ -16,7 +16,20 @@ table .poststyle {
     border-width: 2px;
     border-style: solid;
     padding: 10px;
+
+}
+
+table#t01{
+    width: 100%;
     border-collapse: collapse;
+}
+
+table .message{
+
+    border-width: 2px;
+    border-style: solid;
+    padding: 10px;
+
 }
 
 table .logstyle {

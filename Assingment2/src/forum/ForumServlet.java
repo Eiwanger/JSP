@@ -21,12 +21,20 @@ public class ForumServlet extends HttpServlet {
         Map<String, String[]> parameterMap = request.getParameterMap();
         ArrayList<Message> searchResults = new ArrayList<Message>();
         String paraAction[] = parameterMap.get("action");
-        if (paraAction[0].equalsIgnoreCase("Search Name")) {
-            String input[] = parameterMap.get("sName");
-            out.println(MessageController.printSearchedMessages(MessageController.searchName(input[0]), input[0]));
-        } else if (paraAction[0].equalsIgnoreCase("Search Date")) {
-            String input[] = parameterMap.get("sDate");
-            out.println(MessageController.printSearchedMessages(MessageController.searchDate(input[0]), input[0]));
+
+        try {
+            if (paraAction[0].equalsIgnoreCase("Search Name")) {
+                String input[] = parameterMap.get("sName");
+                out.println(MessageController.printSearchedMessages(MessageController.searchName(input[0]), input[0]));
+            } else if (paraAction[0].equalsIgnoreCase("Search Date")) {
+                String input[] = parameterMap.get("sDate");
+                out.println(MessageController.printSearchedMessages(MessageController.searchDate(input[0]), input[0]));
+            }
+        }catch (NullPointerException e)
+        {
+            //.printStackTrace();
+            System.out.println("User tried to reload the webside without a session");
+            response.sendRedirect("login.html");
         }
     }
 
@@ -45,7 +53,7 @@ public class ForumServlet extends HttpServlet {
             // String username = (String)mySession.getAttribute("username");
             String message[] = parameterMap.get("message");
             LinkedList<String> views = new LinkedList<>();
-            if(parameterMap.get(views) != null) {
+            if(parameterMap.get("views") != null) {
                 for (String s : parameterMap.get("views")) {
                     views.add(s);
                 }
@@ -57,12 +65,19 @@ public class ForumServlet extends HttpServlet {
                     sports.add(s);
                 }
             }
-            Message m = new Message(username[0], MessageController.setCurrentDate(), message[0], views, sports);
-            MessageController.addToList(m);
-
+            if(username[0] != null && message[0] != null) {
+                String msg = message[0];
+                if(msg.length() > 199)
+                {
+                    msg = msg.substring(0,199);
+                }
+                Message m = new Message(username[0], MessageController.setCurrentDate(), msg, views, sports);
+                MessageController.addToList(m);
+                MessageController.logMessageXML(m);
+            }
 
             //MessageController.logMessage(m);
-            MessageController.logMessageXML(m);
+
             out.println(MessageController.printAllMessages());
 
 
