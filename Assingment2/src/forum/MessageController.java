@@ -39,6 +39,7 @@ public class MessageController {
 
     private static ArrayList<Message> MessageList = new ArrayList<>();
 
+    // initialize the logfile as a XML file
     public static void initLogFile() {
 
         //logFile = new File(path);
@@ -66,6 +67,7 @@ public class MessageController {
         }
     }
 
+    // save the document to a path as an xml file
     public static void saveXMLFile(Document doc, String path) {
         try {
             doc.getDocumentElement().normalize();
@@ -86,6 +88,7 @@ public class MessageController {
         MessageList.add(msg);
     }
 
+    // delete the local list and the logfile
     public static void deletePostList() {
         MessageList.clear();
         logFile.delete();
@@ -295,18 +298,26 @@ public class MessageController {
     // print functions
     private static String singleOutput(Message m) {
         String returnString = "";
-        returnString += "<tr><td class=\"poststyle\" style width='15%'>";
+        returnString += "<tr><td class=\"user\" >";
         returnString += "<h3>" + m.getName() + "</h3></td>" +
                 "<td class=\"poststyle\" rowspan='2' text-align='left'>" + m.getMessage() + "</td></tr>\n";
 
-        returnString += "<tr><td class=\"poststyle\" style width='15%'>" + m.getDate() + "</td></tr>\n";
+        returnString += "<tr><td class=\"date\" >" + m.getDate() + "</td></tr>\n";
 
         if (!m.getFavViews().isEmpty()) {
-            returnString += "<tr><td></td><td class=\"poststyle\"> Favourite Views: ";
+            if(m.getFavViews().length() == 1){
+                returnString += "<tr><td></td><td class=\"poststyle\"> Favourite View: ";
+            }else {
+                returnString += "<tr><td></td><td class=\"poststyle\"> Favourite Views: ";
+            }
             returnString += m.getFavViews() + "</td></tr>";
         }
         if (!m.getFavSports().isEmpty()) {
-            returnString += "<tr><td></td><td class=\"poststyle\">Favourite Sports: ";
+            if(m.getFavSports().length() == 1){
+                returnString += "<tr><td></td><td class=\"poststyle\">Favourite Sport: ";
+            }else {
+                returnString += "<tr><td></td><td class=\"poststyle\">Favourite Sports: ";
+            }
             returnString += m.getFavSports() + "</td></tr>";
         }
         returnString += "\n\n";
@@ -325,12 +336,16 @@ public class MessageController {
             for (Message m : msgList) {
 
                 returnString += singleOutput(m);
+
             }
             returnString += "</tbody></table>";
 
 
         }
-        returnString += "<br><a href='forum.html'>Back</a>";
+       // returnString += "<br><a href='forum.html'>Back</a>";
+        returnString += "<form action='forum.html'>" +
+                "            <input class='stickyBack' type=\"submit\" value=\"Back\"/>" +
+                "        </form>";
         returnString += "</body>";
         returnString += "</html>";
 
@@ -352,7 +367,10 @@ public class MessageController {
 
         returnString += "</tbody></table><br>";
 
-        returnString += "<br><a href='forum.html'>Back</a>";
+       // returnString += "<br><a href='forum.html'>Back</a>";
+        returnString += "<form action='forum.html'>" +
+                "            <input class='stickyBack' type=\"submit\" value=\"Back\"/>" +
+                "        </form>";
         returnString += "</body>";
         returnString += "</html>";
 

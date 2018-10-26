@@ -96,6 +96,7 @@ public class ForumPageServlet extends HttpServlet {
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
+            response.sendRedirect("login.html");
         }
 
         out.println("            </td>" +

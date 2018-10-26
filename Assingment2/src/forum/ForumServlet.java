@@ -65,12 +65,13 @@ public class ForumServlet extends HttpServlet {
                     sports.add(s);
                 }
             }
-            if(username[0] != null && message[0] != null) {
+            if(username[0] != null && message[0] != null && !message[0].trim().isEmpty()) {
                 String msg = message[0];
                 if(msg.length() > 199)
                 {
                     msg = msg.substring(0,199);
                 }
+
                 Message m = new Message(username[0], MessageController.setCurrentDate(), msg, views, sports);
                 MessageController.addToList(m);
                 MessageController.logMessageXML(m);
