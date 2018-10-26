@@ -296,6 +296,7 @@ public class MessageController {
     }
 
     // print functions
+    // print a single message
     private static String singleOutput(Message m) {
         String returnString = "";
         returnString += "<tr><td class=\"user\" >";
@@ -324,7 +325,7 @@ public class MessageController {
         return returnString;
     }
 
-
+// print the result for a search
     public static String printSearchedMessages(ArrayList<Message> msgList, String input) {
         String returnString = "";
         returnString += htmlHead;
@@ -342,7 +343,6 @@ public class MessageController {
 
 
         }
-       // returnString += "<br><a href='forum.html'>Back</a>";
         returnString += "<form action='forum.html'>" +
                 "            <input class='stickyBack' type=\"submit\" value=\"Back\"/>" +
                 "        </form>";
@@ -352,7 +352,7 @@ public class MessageController {
         return returnString;
     }
 
-
+// print every message in the list
     public static String printAllMessages() {
         String returnString = "";
         returnString += htmlHead;
@@ -367,7 +367,6 @@ public class MessageController {
 
         returnString += "</tbody></table><br>";
 
-       // returnString += "<br><a href='forum.html'>Back</a>";
         returnString += "<form action='forum.html'>" +
                 "            <input class='stickyBack' type=\"submit\" value=\"Back\"/>" +
                 "        </form>";

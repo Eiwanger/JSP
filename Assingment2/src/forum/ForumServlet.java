@@ -19,7 +19,7 @@ public class ForumServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         Map<String, String[]> parameterMap = request.getParameterMap();
-        ArrayList<Message> searchResults = new ArrayList<Message>();
+        //ArrayList<Message> searchResults = new ArrayList<Message>();
         String paraAction[] = parameterMap.get("action");
 
         try {
@@ -77,7 +77,7 @@ public class ForumServlet extends HttpServlet {
                 MessageController.logMessageXML(m);
             }
 
-            //MessageController.logMessage(m);
+
 
             out.println(MessageController.printAllMessages());
 

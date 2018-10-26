@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 
-import javax.print.DocFlavor;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,12 +37,8 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
 
-        // Map<String, String[]> logMap = request.getParameterMap();
-
-
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-
 
         if (action.equalsIgnoreCase("create account")) {
             out.println("<html><head>");

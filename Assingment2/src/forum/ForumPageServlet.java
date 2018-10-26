@@ -45,7 +45,6 @@ public class ForumPageServlet extends HttpServlet {
                         "        <tr>" +
                         "            <td>User Name</td>" +
                         "            <td>" +
-                        //"                <input type=\"text\" size=\"40\" name=\"userName\" value=\"\">" +
                         "        <input type='hidden' name='userName' value='" + username + "' />" +
                         "        <input type='text' name='username' value='" + username + "' disabled='disabled' />" +
                         "            </td>" +

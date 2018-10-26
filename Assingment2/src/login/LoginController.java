@@ -105,8 +105,6 @@ public class LoginController {
             throw new UserInputException(("Unsafe password! Use at least 4 letters"));
         }
 
-
-
         addUser(nUserName, nPassword);
         return true;
     }
@@ -153,9 +151,6 @@ public class LoginController {
 
     }
 
-    public static boolean checkUsername(String username) {
-        return UserLogin.containsKey(username);
-    }
 
     public static boolean checkIfEmpty(String parameter) {
         if (parameter != null && !parameter.equals("") && !parameter.equals("null")) {
@@ -175,7 +170,7 @@ public class LoginController {
         }
     }
 
-
+// encrypt the password (test this function)
     public static String encryptPassword(String passwordToHash) {
 
         String generatedPassword = null;
@@ -201,9 +196,9 @@ public class LoginController {
         return generatedPassword;
     }
 
+    // create the servlet, because I need it more than once
     public static String createServlet(String action, String username, String password) {
         String body = "";
-        // out.println("<div class='user_form'>");
         body += ("<h2>Login</h2>");
         // Here we set the value for method to post, so that
         // the servlet service method calls doPost in the
@@ -225,7 +220,7 @@ public class LoginController {
         if (action != null && !LoginController.checkIfEmpty(password)) {
             body += (" style='background-color:red;'");
             body += ("><input type='password' name='password' value='" + (password == null ? "" : password) + "' size='40'></td>");
-            body += ("<td >Password was empty</td></tr>");
+            body += ("<td >Password is empty</td></tr>");
         } else {
             body += ("><input type='password' name='password' value='" + (password == null ? "" : password) + "' size='40'></td></tr>");
         }
