@@ -7,9 +7,9 @@ import java.io.*;
 import java.util.Map;
 
 public class DownloadServlet extends HttpServlet {
-    PrintWriter out;
-    String separator;
-    String downloadDir;
+    private PrintWriter out;
+    private String separator;
+    private String downloadDir;
 
     public void init() {
         separator = File.separator;
@@ -36,8 +36,8 @@ public class DownloadServlet extends HttpServlet {
                                 "    <title>Download</title>" +
                                 "<link rel='stylesheet' href='styles.css'>" +
                                 "</head>" +
-                                "<body>" +
-                                "<p>" + downloadDir + "</p>"
+                                "<body>"
+          //                   +   "<p>" + downloadDir + "</p>"
                 );
                 out.println("<h2>Downloadable Files</h2>"
                         + "<form action='ds' method='post'>"
@@ -49,7 +49,9 @@ public class DownloadServlet extends HttpServlet {
                             "<input type='submit' value='" + s + "'name='action'>" +
                             "</td></tr>");
                 }
-                out.println("</table></form></body></html>");
+                out.println("</table></form>" +
+                        "<p style='text-align: center;'><a href='upload.html'>Upload side</a></p>"
+                        +"</body></html>");
 
             } catch (IOException e) {
 
@@ -78,7 +80,7 @@ public class DownloadServlet extends HttpServlet {
                 bufferedInputStream = new BufferedInputStream(new FileInputStream(
                         downloadFile));
 
-                int readBytes = 0;
+                int readBytes;
                 // Here we read from the file and write to the ServletOutputStream
                 while ((readBytes = bufferedInputStream.read()) != -1)
                     outputStream.write(readBytes);
@@ -107,7 +109,7 @@ public class DownloadServlet extends HttpServlet {
 
     private String getContentType(String fileName) {
         String fileExt = "";
-        String contentType = "";
+        String contentType;
         int i;
 
         if ((i = fileName.indexOf(".")) != -1) {
