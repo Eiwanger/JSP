@@ -1,27 +1,31 @@
 package servlet.examples;
 
-        import java.io.File;
-        import java.io.IOException;
-        import java.io.PrintWriter;
-        import java.text.SimpleDateFormat;
-        import java.util.Date;
-        import javax.servlet.ServletException;
-        import javax.servlet.annotation.MultipartConfig;
-        import javax.servlet.annotation.WebInitParam;
-        import javax.servlet.annotation.WebServlet;
-        import javax.servlet.http.HttpServlet;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-        import javax.servlet.http.Part;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 
 // Source Example 4.1
 //Here we configure the servlet
 // change to upload a picture from another server
 @WebServlet(name = "FileUploadServlet", urlPatterns = {"/fus"},
-        initParams = { @WebInitParam(name = "upload_path", value = "downloadDir") })
-@MultipartConfig(fileSizeThreshold=1024*1024*10,  // 10 MB
-        maxFileSize=1024*1024*50,       // 50 MB
-        maxRequestSize=1024*1024*100
+        initParams = {@WebInitParam(name = "upload_path", value = "downloadDir")})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10,  // 10 MB
+        maxFileSize = 1024 * 1024 * 50,       // 50 MB
+        maxRequestSize = 1024 * 1024 * 100
 )    // 100 MB
 public class FileUploadServlet extends HttpServlet {
 
@@ -50,7 +54,6 @@ public class FileUploadServlet extends HttpServlet {
     }
 
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendRedirect("index.html");
@@ -62,40 +65,19 @@ public class FileUploadServlet extends HttpServlet {
         String fileName;
         File fileObj;
         String feedback = "File successfully uploaded!";
-        String filename=request.getParameter("filename");
+        String filename = uploadFilePath + request.getParameter("filename");
+        URL remoteFile = new URL(request.getParameter("remoteFile"));
 
+        try {
 
-        //Here we get all the parts from request and write it to the file on server
-        for (Part part : request.getParts()) {
-
-            //This does not work for Java 7
-            //fileName=part.getSubmittedFileName();
-            //feedback.append("part.getSubmittedFileName()=" + part.getSubmittedFileName() + System.lineSeparator());
-            //Here we read the value of the input, whose type is file.
-            //Part filePart = request.getPart("fileName");
-
-            //Here we extract the name of the file from the part. If the part is a file part, we get a valid
-            //file name and otherwise null
-            fileName = getFileName(part);
-
-            //Here we check whether the part is really a file part or not. If the part is a file part,
-            //we save it to the destination directory. The following line does not work with Java 7.
-            //  if(part.getSubmittedFileName()!=null) {
-
-            if(!fileName.equals("")) {
-                fileObj=new File(fileName);
-                fileName=fileObj.getName();
-
-                //Here we rename the file
-                fileName= filename;
-
-                fileObj=new File(uploadFilePath  + fileName);
-
-                part.write(fileObj.getAbsolutePath());
-            }
-
+            Files.copy(
+                    new URL(request.getParameter("remoteFile")).openStream(),
+                    Paths.get(filename));
+        } catch (UnknownHostException e) {
+            feedback = "Unknown host. Please enter a valid host address";
+        } catch (FileAlreadyExistsException e) {
+            feedback = "File does already exist, choose another name.";
         }
-
 
         PrintWriter out = response.getWriter();
         out.println("<html><head><title>" + "Response of " + this.getServletConfig().getInitParameter("urlPatterns") +
@@ -116,7 +98,7 @@ public class FileUploadServlet extends HttpServlet {
 
         String contentDisp = part.getHeader("content-disposition");
 
-        if(contentDisp !=null) {
+        if (contentDisp != null) {
 
             String[] tokens = contentDisp.split(";");
 
