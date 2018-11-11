@@ -29,7 +29,7 @@ public class MessageController {
     public static String separator = System.getProperty("file.separator");
 
     private static String fileName = "forumLog.xml";
-    static String logFilePath = ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath() + separator + folder + separator + fileName;
+    static String logFilePath;
     private static File f = new File(ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     private static File logFile;
 
@@ -41,8 +41,13 @@ public class MessageController {
 
     // initialize the logfile as a XML file
     public static void initLogFile() {
-
-        //logFile = new File(path);
+       logFilePath = ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath() + separator + folder + separator;
+        logFile = new File(logFilePath);
+        if(!logFile.exists())
+        {
+            logFile.mkdirs();
+        }
+        logFilePath = ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath() + separator + folder + separator + fileName;
 
         logFile = new File(logFilePath);
         try {

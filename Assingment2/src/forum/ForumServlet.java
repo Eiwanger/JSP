@@ -49,7 +49,7 @@ public class ForumServlet extends HttpServlet {
         if (actionValue[0].equals("Submit")) {
 
               String username[] = parameterMap.get("userName");
-            HttpSession mySession = request.getSession();
+           // HttpSession mySession = request.getSession();
             // String username = (String)mySession.getAttribute("username");
             String message[] = parameterMap.get("message");
             LinkedList<String> views = new LinkedList<>();

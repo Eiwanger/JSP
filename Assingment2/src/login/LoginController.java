@@ -33,7 +33,15 @@ public class LoginController {
     public static void initUserDataFile() {
         separator = System.getProperty("file.separator");
         userDataPath = LoginController.class.getProtectionDomain().getCodeSource().getLocation().getPath()
-                + separator + folder + separator+ fileName;
+                + separator + folder + separator;
+        userDataFile = new File(userDataPath);
+        if(!userDataFile.exists())
+        {
+            userDataFile.mkdirs();
+        }
+
+        userDataPath = LoginController.class.getProtectionDomain().getCodeSource().getLocation().getPath()
+                + separator + folder + separator + fileName;
         userDataFile = new File(userDataPath);
         try {
 
