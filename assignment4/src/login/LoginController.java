@@ -32,16 +32,15 @@ public class LoginController {
 
     public static void initUserDataFile() {
         separator = System.getProperty("file.separator");
-        userDataPath = LoginController.class.getProtectionDomain().getCodeSource().getLocation().getPath()
-                + separator + folder + separator;
+        userDataPath = MessageController.initFilePath()+ separator + folder + separator;
+
         userDataFile = new File(userDataPath);
         if(!userDataFile.exists())
         {
             userDataFile.mkdirs();
         }
 
-        userDataPath = LoginController.class.getProtectionDomain().getCodeSource().getLocation().getPath()
-                + separator + folder + separator+ fileName;
+        userDataPath += fileName;
         userDataFile = new File(userDataPath);
         try {
 
@@ -212,7 +211,7 @@ public class LoginController {
         // the servlet service method calls doPost in the
         // response to this form submit
 
-        body += ("<form method='POST' + action='login.html'>");
+        body += ("<form method='POST' + action='index.html'>");
         body += ("<table style='width=100%'><tr><td>");
         body += ("User Name: </td><td ");
 

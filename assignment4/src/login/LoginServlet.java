@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 
-@WebServlet("/login.html")
+@WebServlet("/index.html")
 public class LoginServlet extends HttpServlet {
     public void init() {
         LoginController.initUserDataFile();
@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
             }else{
                 out.println("<p>Registration failed, passwords didn't match</p>");
             }
-            out.println("<br><a href='login.html'>Back</a>");
+            out.println("<br><a href='index.html'>Back</a>");
             out.println("</body></html>");
 
         } else {

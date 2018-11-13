@@ -7,7 +7,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
-
 import javax.imageio.IIOException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
@@ -39,7 +38,7 @@ public class MessageController {
 
     final static String folder = "logger";
     public static String separator = System.getProperty("file.separator");
-
+    public static String ressourceFolder ="resources";
     private static String fileName = "forumLog.xml";
     static String logFilePath;
     static String imageFolderPath;
@@ -47,7 +46,7 @@ public class MessageController {
     private static File f = new File(ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     private static File logFile;
     private static File imageFolderFile;
-    private static String htmlHead ="<html><head><link rel=\"stylesheet\" " +
+    private static String htmlHead = "<html><head><link rel=\"stylesheet\" " +
             "type='text/css' href=\"styles.css\"></head><body>" +
             "<table id='t01'><tbody>";
 
@@ -55,13 +54,15 @@ public class MessageController {
 
     // initialize the logfile as a XML file
     public static void initLogFile() {
-        logFilePath = ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath() + separator + folder + separator;
+
+        logFilePath = initFilePath()+ separator + folder + separator;
+
         logFile = new File(logFilePath);
-        if(!logFile.exists())
-        {
+        if (!logFile.exists()) {
             logFile.mkdirs();
         }
-        logFilePath = ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath() + separator + folder + separator + fileName;
+
+        logFilePath += fileName;
 
         logFile = new File(logFilePath);
 
@@ -88,17 +89,21 @@ public class MessageController {
         }
     }
 
-
-    public static void initImageFolder()
+    public static String initFilePath()
     {
-        int i;
-        imageFolderPath = ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        i = imageFolderPath.indexOf("WEB-INF/");
-        imageFolderPath = imageFolderPath.substring(0, i) + "Images" + separator;
+        String filePath  = ForumServlet.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        int i = filePath.indexOf("WEB-INF/");
+        filePath = filePath.substring(0, i);
+        return filePath + ressourceFolder;
+
+    }
+
+    public static void initImageFolder() {
+
+        imageFolderPath = initFilePath()+ separator + "Images" + separator;
 
         imageFolderFile = new File(imageFolderPath);
-        if(!imageFolderFile.exists())
-        {
+        if (!imageFolderFile.exists()) {
             imageFolderFile.mkdir();
         }
     }
@@ -128,18 +133,17 @@ public class MessageController {
     public static void deletePostList() {
         MessageList.clear();
         logFile.delete();
-
         deleteDir(imageFolderFile);
         initImageFolder();
         initLogFile();
 
     }
 
-  private static void deleteDir(File file) {
+    private static void deleteDir(File file) {
         File[] contents = file.listFiles();
         if (contents != null) {
             for (File f : contents) {
-                if (! Files.isSymbolicLink(f.toPath())) {
+                if (!Files.isSymbolicLink(f.toPath())) {
                     deleteDir(f);
                 }
             }
@@ -193,10 +197,9 @@ public class MessageController {
                     post.appendChild(favSports);
                 }
             }
-            if(!m.getImageLinks().isEmpty()){
+            if (!m.getImageLinks().isEmpty()) {
                 Node images = doc.createElement("images");
-                for(String s : m.getImageLinks())
-                {
+                for (String s : m.getImageLinks()) {
                     Node image = doc.createElement("Image");
                     image.appendChild(doc.createTextNode(s));
                     images.appendChild(image);
@@ -247,7 +250,6 @@ public class MessageController {
                 msg.imageLinks = getChildNodes(element, "images");
             }
         }
-
         return msg;
     }
 
@@ -255,7 +257,7 @@ public class MessageController {
         LinkedList<String> taglist = new LinkedList<>();
         try {
 
-            if(element.getElementsByTagName(tagname).getLength() == 0){
+            if (element.getElementsByTagName(tagname).getLength() == 0) {
                 return taglist;
             }
 
@@ -318,39 +320,38 @@ public class MessageController {
             if (!m.getImageLinks().isEmpty()) {
                 for (String s : m.getImageLinks()) {
 
-                    int i = s.indexOf("Images/");
-                    String newPath = s.substring(i-1);
-                    i = s.indexOf("Images/");
-                    String imageName = s.substring(i-1);
+                    int i = s.indexOf("resources/Images/");
+                    String newPath = s.substring(i);
+                    i = s.indexOf("resources/Images/");
+                    String imageName = s.substring(i);
 
                     returnString += "<td class=\"poststyle\" rowspan='2'>" +
-                            "<img src='" + newPath + "'alt='"+ imageName +"' width='200' height='200'>";
+                            "<img src='" + newPath + "'alt='" + imageName + "' width='200' height='200'>";
                 }
 
 
                 returnString += "</td";
             }
-        }catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        returnString +="</tr>";
+        returnString += "</tr>";
 
         returnString += "<tr><td class=\"date\" >" + m.getDate() + "</td></tr>";
 
 
         if (!m.getFavViews().isEmpty()) {
-            if(m.getFavViews().length() == 1){
+            if (m.getFavViews().length() == 1) {
                 returnString += "<tr><td></td><td class=\"poststyle\"> Favourite View: ";
-            }else {
+            } else {
                 returnString += "<tr><td></td><td class=\"poststyle\"> Favourite Views: ";
             }
             returnString += m.getFavViews() + "</td></tr>";
         }
         if (!m.getFavSports().isEmpty()) {
-            if(m.getFavSports().length() == 1){
+            if (m.getFavSports().length() == 1) {
                 returnString += "<tr><td></td><td class=\"poststyle\">Favourite Sport: ";
-            }else {
+            } else {
                 returnString += "<tr><td></td><td class=\"poststyle\">Favourite Sports: ";
             }
             returnString += m.getFavSports() + "</td></tr>";
@@ -360,7 +361,7 @@ public class MessageController {
         return returnString;
     }
 
-// print the result for a search
+    // print the result for a search
     public static String printSearchedMessages(ArrayList<Message> msgList, String input) {
         String returnString = "";
         returnString += htmlHead;
@@ -387,7 +388,7 @@ public class MessageController {
         return returnString;
     }
 
-// print every message in the list
+    // print every message in the list
     public static String printAllMessages() {
         String returnString = "";
         returnString += htmlHead;
@@ -412,10 +413,9 @@ public class MessageController {
     }
 
     // file operations
-    public static String getFilename(Part part)
-    {
+    public static String getFilename(Part part) {
         String contentDisp = part.getHeader("content-disposition");
-        if(contentDisp!= null) {
+        if (contentDisp != null) {
             String[] tokens = contentDisp.split(";");
 
             for (String token : tokens) {
@@ -428,14 +428,12 @@ public class MessageController {
     }
 
 
-    public static String saveFileToDisk(Part part, String filename)
-    {
+    public static String saveFileToDisk(Part part, String filename) {
         File newImage = null;
         try {
-           newImage = new File(imageFolderPath + filename);
+            newImage = new File(imageFolderPath + filename);
             part.write(newImage.getAbsolutePath());
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             return "";
         }
         return newImage.getAbsolutePath();
