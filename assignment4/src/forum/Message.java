@@ -1,7 +1,6 @@
 package forum;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class Message {
 
@@ -64,15 +63,6 @@ public class Message {
     public void setMessage(String message) {
         this.message = message;
     }
-
-    public String getFavViewAtIndex(int i) {
-        return favView.get(i);
-    }
-
-    public String getFavSportAtIndex(int i) {
-        return favSport.get(i);
-    }
-
 
     public String getFavViews() {
         String views = "";

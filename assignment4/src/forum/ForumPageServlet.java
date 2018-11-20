@@ -51,7 +51,7 @@ public class ForumPageServlet extends HttpServlet {
                         "        </tr>" +
                         "<tr>"+
                         "            <td>Image upload</td>" +
-                        "<td><input type='file' name='file' multiple/></td>"+
+                        "<td><input type='file' name='file' accept='image/*' multiple/></td>"+
                         "</tr>"+
                         "        <tr>" +
                         "            <td>Message</td>" +

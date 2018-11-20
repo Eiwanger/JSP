@@ -45,17 +45,17 @@ public class LoginServlet extends HttpServlet {
             out.println("</head><body>");
             out.println("<h2>Registration</h2>");
 
-            Map<String, String[]> registerMap =  request.getParameterMap();
+            Map<String, String[]> registerMap = request.getParameterMap();
             String passwords[] = registerMap.get("password");
-            if(passwords[0].equals(passwords[1])) {
+            if (passwords[0].equals(passwords[1])) {
                 try {
-                    if (LoginController.registUser(username, password)) {
+                    if (LoginController.registerUser(username, password)) {
                         out.println("<p>Account successfully created</p>");
                     }
                 } catch (UserInputException Ui) {
                     out.println("<p>" + Ui.getMessage() + "</p>");
                 }
-            }else{
+            } else {
                 out.println("<p>Registration failed, passwords didn't match</p>");
             }
             out.println("<br><a href='index.html'>Back</a>");
@@ -70,8 +70,9 @@ public class LoginServlet extends HttpServlet {
             out.println("</head><body>");
 
 
-            out.println(LoginController.createServlet(action, username, password));
-            if(!(action==null)) {
+            out.println(LoginController.createLoginServlet(action, username, password));
+
+            if (!(action == null)) {
                 if (action.equalsIgnoreCase("register")) {
                     response.sendRedirect("regist.html");
                     return;

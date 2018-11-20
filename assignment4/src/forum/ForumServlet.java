@@ -91,6 +91,7 @@ public class ForumServlet extends HttpServlet {
                        String tmp = MessageController.saveFileToDisk(part, fileName);
                        if(!tmp.equals(""))
                        {
+
                            imageList.add(tmp);
                        }
 

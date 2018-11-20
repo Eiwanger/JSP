@@ -10,13 +10,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-public class LoginController {
+
+class LoginController {
 
     private static String fileName = "userData.xml";
     private static String userDataPath;
@@ -24,21 +23,23 @@ public class LoginController {
     private static String folder = "UserData";
     private static String separator;
 
-    private static FileWriter fileWriter;
-    private static FileReader fileReader;
-
     // private static UserLogin userLogin = new UserLogin();
-    private static HashMap<String, String> UserLogin = new HashMap<String, String>();
+    private static HashMap<String, String> UserLogin = new HashMap<>();
 
+
+    // initialize the file with the login data
     public static void initUserDataFile() {
         separator = System.getProperty("file.separator");
-        userDataPath = MessageController.initFilePath()+ separator + folder + separator;
+        userDataPath = MessageController.initFilePath() + separator + folder + separator;
 
         userDataFile = new File(userDataPath);
-        if(!userDataFile.exists())
-        {
-            userDataFile.mkdirs();
+
+        if (!userDataFile.exists()) {
+            if (userDataFile.mkdirs()) {
+
+            }
         }
+
 
         userDataPath += fileName;
         userDataFile = new File(userDataPath);
@@ -54,24 +55,17 @@ public class LoginController {
 
                 MessageController.saveXMLFile(doc, userDataPath);
             }
-        } catch (ParserConfigurationException p) {
+        } catch (
+                ParserConfigurationException p) {
             p.printStackTrace();
         }
 
     }
 
+    // write a user to the xml file which stores the login data
     private static void addUserToFile(String username, String passwordHash) {
-/*        String log = username + "   " + passwordHash + "\n";
 
-        try {
-            fileWriter = new FileWriter(userDataPath, true);
-            fileWriter.write(log);
-            fileWriter.close();
-        } catch (IOException e) {
-
-        }
-*/
-        Node user = null;
+        Element user;
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -79,10 +73,8 @@ public class LoginController {
             Node root = doc.getDocumentElement();
             user = doc.createElement("user");
 
-            ((Element) user).setAttribute("username", username);
-            ((Element) user).setAttribute("password", passwordHash);
-
-
+            user.setAttribute("username", username);
+            user.setAttribute("password", passwordHash);
 
 
             root.appendChild(user);
@@ -92,7 +84,9 @@ public class LoginController {
         }
     }
 
-    public static boolean registUser(String nUserName, String nPassword) throws UserInputException {
+
+    // check if the registration fields where filled correctly and if so, write the user to the file
+    static boolean registerUser(String nUserName, String nPassword) throws UserInputException {
 
         if (!checkIfEmpty(nUserName) && !checkIfEmpty(nPassword)) {
             throw new UserInputException("Input empty");
@@ -100,15 +94,13 @@ public class LoginController {
         if (UserLogin.containsKey(nUserName)) {
             throw new UserInputException("User already exists");
         }
-        if(nUserName.length() < 3)
-        {
+        if (nUserName.length() < 3) {
             throw new UserInputException("Username to short! Write at least 3 letters!");
         }
-        if(!nUserName.matches("^[a-zA-Z0-9]*$")){
+        if (!nUserName.matches("^[a-zA-Z0-9]*$")) {
             throw new UserInputException("No special letters allowed in Username");
         }
-        if(nPassword.length() < 4)
-        {
+        if (nPassword.length() < 4) {
             throw new UserInputException(("Unsafe password! Use at least 4 letters"));
         }
 
@@ -116,26 +108,16 @@ public class LoginController {
         return true;
     }
 
+    // write the user to the login data file and to the local hashmap
     private static void addUser(String user, String password) {
 
         UserLogin.put(user, encryptPassword(password));
         addUserToFile(user, encryptPassword(password));
     }
 
+    // read the data from the login file and store it in the local hashmap
     protected static void collectData() {
-/*        String tmp;
-        int border;
-        try {
-            fileReader = new FileReader(userDataPath);
-            BufferedReader buffR = new BufferedReader(fileReader);
-            while ((tmp = buffR.readLine()) != null) {
-                border = tmp.indexOf("   ");
-                UserLogin.put(tmp.substring(0, border), tmp.substring(border + 3));
-            }
-        } catch (IOException e) {
 
-        }
-*/
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -147,7 +129,7 @@ public class LoginController {
                 Node tmp = nodeList.item(i);
                 if (tmp.getNodeType() == Node.ELEMENT_NODE) {
 
-                    Element element = (Element)tmp;
+                    Element element = (Element) tmp;
                     UserLogin.put(element.getAttribute("username"), element.getAttribute("password"));
 
                 }
@@ -158,7 +140,7 @@ public class LoginController {
 
     }
 
-
+    // check if the parameter is empty or null
     public static boolean checkIfEmpty(String parameter) {
         if (parameter != null && !parameter.equals("") && !parameter.equals("null")) {
             return true;
@@ -166,6 +148,7 @@ public class LoginController {
         return false;
     }
 
+    // check if the login exits and if so if it was right
     public static boolean checkLogin(String username, String password) {
         if (!checkIfEmpty(password) || !checkIfEmpty(username)) {
             return false;
@@ -177,7 +160,7 @@ public class LoginController {
         }
     }
 
-// encrypt the password (test this function)
+    // encrypt the password (test this function => it works :D )
     public static String encryptPassword(String passwordToHash) {
 
         String generatedPassword = null;
@@ -204,7 +187,7 @@ public class LoginController {
     }
 
     // create the servlet, because I need it more than once
-    public static String createServlet(String action, String username, String password) {
+    public static String createLoginServlet(String action, String username, String password) {
         String body = "";
         body += ("<h2>Login</h2>");
         // Here we set the value for method to post, so that
