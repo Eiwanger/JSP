@@ -30,11 +30,13 @@
 
             <role-name>tomcat</role-name>
         </auth-constraint>
+        <!--
         <user-data-constraint>
 
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
 
         </user-data-constraint>
+        -->
     </security-constraint>
 
     <!-- Define the login configuration for this application -->

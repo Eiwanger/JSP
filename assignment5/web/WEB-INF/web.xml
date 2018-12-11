@@ -30,32 +30,16 @@
 
             <role-name>user</role-name>
         </auth-constraint>
-
+<!--
         <user-data-constraint>
 
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
 
         </user-data-constraint>
-
+-->
     </security-constraint>
 
 <!--
-    <security-constraint>
-
-        <web-resource-collection>
-
-            <web-resource-name>Servlets</web-resource-name>
-
-            <url-pattern>/loginAdminServlet</url-pattern>
-        </web-resource-collection>
-
-        <auth-constraint>
-
-            < This role is not in the default user directory >
-
-            <role-name>admin</role-name>
-        </auth-constraint>
-
         <user-data-constraint>
 
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>

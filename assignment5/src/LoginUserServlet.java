@@ -14,26 +14,25 @@ public class LoginUserServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    doPost(request, response);
+        doPost(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-        HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(15);
-        response.setIntHeader("Refresh", 20);
-
-/*
-        // force redirect if session isn't valid
-        HttpSession tmp = request.getSession(false);// don't create if it doesn't exist
-        if(session != null && !session.isNew()) {
-            //doPost(request, response);
-        } else {
-
-            //response.sendRedirect("/index.html");
+        HttpSession session = request.getSession(); // this creates a session if it doesn't exist
+        /*
+        if(session == null)
+        {
+            response.sendRedirect("index.html");
         }
-*/
+        */
+        session.setMaxInactiveInterval(10);
+
+
+        response.setIntHeader("Refresh", 15);
+
+
+
 
         response.setContentType("text/html");
 

@@ -1,0 +1,74 @@
+p {
+    color: black;
+    font-family: Arial;
+}
+
+body {
+    background-color: white;
+}
+
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+table .poststyle {
+    border-width: 2px;
+    border-style: solid;
+    padding: 10px;
+    border-color: black;
+    background: gray;
+}
+
+table#t01{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table .message{
+
+    border-width: 2px;
+    border-style: solid;
+    padding: 10px;
+
+}
+
+table .user{
+
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    padding: 10px;
+    width: 15%;
+    background-color: dimgray;
+    color: black;
+}
+
+table .date{
+    border-width: 2px;
+    border-style: solid;
+    padding: 10px;
+    border-color: black;
+    width: 15%;
+    background-color: dimgray;
+    color: black;
+}
+
+table .logstyle {
+    width: 100%;
+}
+
+
+
+.topright {
+    position: fixed;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+}
+
+.stickyBack {
+
+    position: fixed;
+    bottom: 0;
+}
