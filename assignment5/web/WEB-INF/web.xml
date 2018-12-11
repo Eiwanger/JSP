@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_4_0.xsd"
+           version="3.0">
+
+    <display-name>Welcome Servlet</display-name>
+
+    <description>
+
+        Servlet Demos
+
+    </description>
+
+    <!-- Define a security constraint on this application -->
+
+    <security-constraint>
+
+        <web-resource-collection>
+
+            <web-resource-name>Servlets</web-resource-name>
+
+            <url-pattern>/loginUserServlet</url-pattern>
+        </web-resource-collection>
+
+        <auth-constraint>
+
+            <!-- This role is not in the default user directory -->
+
+            <role-name>user</role-name>
+        </auth-constraint>
+
+        <user-data-constraint>
+
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+
+        </user-data-constraint>
+
+    </security-constraint>
+
+<!--
+    <security-constraint>
+
+        <web-resource-collection>
+
+            <web-resource-name>Servlets</web-resource-name>
+
+            <url-pattern>/loginAdminServlet</url-pattern>
+        </web-resource-collection>
+
+        <auth-constraint>
+
+            < This role is not in the default user directory >
+
+            <role-name>admin</role-name>
+        </auth-constraint>
+
+        <user-data-constraint>
+
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+
+        </user-data-constraint>
+
+    </security-constraint>
+-->
+    <!-- Define the login configuration for this application -->
+
+    <login-config>
+
+        <auth-method>BASIC</auth-method>
+
+        <realm-name>Tomcat Manager Application</realm-name>
+
+    </login-config>
+
+    <!-- Security roles referenced by this web application -->
+
+
+
+</web-app>
