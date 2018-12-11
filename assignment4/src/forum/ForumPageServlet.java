@@ -31,7 +31,7 @@ public class ForumPageServlet extends HttpServlet {
                         "<body>" +
                         "<div class=\"container\">" +
                         "    <div class=\"topright\">" +
-                        "        <form action=\"login.html\">" +
+                        "        <form action=\"index.html\">" +
                         "            <input type=\"submit\" value=\"Logout\"/>" +
                         "        </form>" +
                         "    </div>" +
@@ -99,7 +99,7 @@ public class ForumPageServlet extends HttpServlet {
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
-            response.sendRedirect("login.html");
+            response.sendRedirect("index.html");
         }
 
         out.println("            </td>" +

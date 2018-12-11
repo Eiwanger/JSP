@@ -69,12 +69,7 @@ public class MessageController {
 
 
             if (!logFile.exists()) {
-                /*try {
-                    logFile.createNewFile();
-                }catch (IOException e)
-                {
 
-                }*/
                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
                 Document doc = docBuilder.newDocument();
@@ -196,6 +191,7 @@ public class MessageController {
                     post.appendChild(favSports);
                 }
             }
+            // todo :done images written to file
             if (!m.getImageLinks().isEmpty()) {
                 Node images = doc.createElement("images");
                 for (String s : m.getImageLinks()) {
@@ -246,6 +242,7 @@ public class MessageController {
 
                 msg.favView = getChildNodes(element, "favViews");
                 msg.favSport = getChildNodes(element, "favSports");
+                // todo :done get imagelinks from file
                 msg.imageLinks = getChildNodes(element, "images");
             }
         }
@@ -324,6 +321,7 @@ public class MessageController {
                     i = s.indexOf("resources/Images/");
                     String imageName = s.substring(i);
 
+                    // todo :done link image to picture
                     returnString += "<td class=\"poststyle\" rowspan='2'>" +
                             "<img src='" + newPath + "'alt='" + imageName + "' width='200' height='200'>";
                 }

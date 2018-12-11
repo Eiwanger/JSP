@@ -41,7 +41,7 @@ public class ForumServlet extends HttpServlet {
         } catch (NullPointerException e) {
             //.printStackTrace();
             System.out.println("User tried to reload the webside without a session");
-            response.sendRedirect("login.html");
+            response.sendRedirect("index.html");
         }
     }
 
