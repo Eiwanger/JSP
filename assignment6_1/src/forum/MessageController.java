@@ -2,13 +2,8 @@ package forum;
 
 import Database.DBHandler;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.servlet.http.Part;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -22,7 +17,6 @@ import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedList;
 
 public class MessageController {
 
@@ -88,7 +82,6 @@ public class MessageController {
         int i = filePath.indexOf("WEB-INF/");
         filePath = filePath.substring(0, i);
         return filePath + ressourceFolder;
-
     }
 
     public static void initImageFolder() {
