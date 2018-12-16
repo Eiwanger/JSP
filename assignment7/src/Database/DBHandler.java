@@ -3,25 +3,25 @@ package Database;
 import forum.ForumServlet;
 import forum.Message;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.LinkedList;
 
 public class DBHandler {
 
-    static String dbUserName = "e1800821";
-    static String dbPassword = "dislike-defect";
+    static String dbUserName = "e1800820";
+    static String dbPassword = "GZ2cPTsEvFC3";
 
-    static String dbName = "e1800821_forum2";
+    static String dbName = "e1800820_feedback";
     static String dbPicTableName = "pictures";
     static String dbPostTableName = "posts";
     static String ressourcesLocation= "resources/Images/";
 
-    public static void AddMessageToDataBase(Message msg) {
+    public static void AddMessageToDataBase() {
 
         Connection conn = null;
         Statement stmt = null;

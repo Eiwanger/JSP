@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<h2>Feedback form</h2>
+<form method="POST" action="feedbackServlet">
+    <table>
+        <tr><th>First name: </th><td>
+            <input type="text" name="firstname" size="20">
+        </td></tr>
+        <tr><th>Surname: </th><td>
+            <input type="text" name="surname" size="20">
+        </td></tr>
+        <tr><th>Email: </th><td>
+            <input type="text" name="email" size="20">
+        </td></tr>
+        <tr><th>Phonenumber: </th><td>
+            <input type="text" name="phonenumber" size="20">
+        </td></tr>
+        <tr><th>Feedback: </th><td>
+            <textarea name="feedback" ></textarea>
+        </td></tr>
+        <tr>
+            <td><input type="Submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

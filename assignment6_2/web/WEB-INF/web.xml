@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-		  http://java.sun.com/xml/ns/javaee/web-app_4_0.xsd"
-           version="4.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+    <display-name>Example_62</display-name>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+    </welcome-file-list>
+
+    <display-name>Database Servlet Demo</display-name>
+    <description>
+        Servlet Demos.
+    </description>
+    <!-- Define servlets that are included in the example application -->
+    <servlet>
+        <servlet-name>QueryDatabaseServlet</servlet-name>
+        <servlet-class>db.QueryDatabaseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QueryDatabaseServlet</servlet-name>
+        <url-pattern>/qdbs</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateTablesServlet</servlet-name>
+        <servlet-class>db.CreateTablesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateTablesServlet</servlet-name>
+        <url-pattern>/cdbts</url-pattern>
+    </servlet-mapping>
 
 </web-app>
