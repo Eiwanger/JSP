@@ -19,7 +19,7 @@
 
         <web-resource-collection>
             <web-resource-name>Servlets</web-resource-name>
-            <url-pattern>/loginAdminServlet</url-pattern>
+            <url-pattern>/index.html</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
         </web-resource-collection>
@@ -28,7 +28,7 @@
 
             <!-- This role is not in the default user directory -->
 
-            <role-name>tomcat</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
         <!--
         <user-data-constraint>
@@ -39,6 +39,29 @@
         -->
     </security-constraint>
 
+    <security-constraint>
+
+        <web-resource-collection>
+            <web-resource-name>Servlets</web-resource-name>
+            <url-pattern>/feedback.html</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+
+        <auth-constraint>
+
+            <!-- This role is not in the default user directory -->
+
+            <role-name>noAccess</role-name>
+        </auth-constraint>
+        <!--
+        <user-data-constraint>
+
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+
+        </user-data-constraint>
+        -->
+    </security-constraint>
     <!-- Define the login configuration for this application -->
 
     <login-config>

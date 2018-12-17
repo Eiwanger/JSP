@@ -39,7 +39,7 @@ public class DBHandler {
             // Notice that here we are accessing mg_db database
 
             String url = "jdbc:mysql://mysql.cc.puv.fi:3306/" + dbName;
-
+            //GZ2cPTsEvFC3
             // Here we create a connection to the database
             //conn = DriverManager.getConnection(url, "scott", "tiger");
             // For mg_db mySQL database the above code would look like

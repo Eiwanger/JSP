@@ -7,18 +7,36 @@
 <h2>Application Login Form</h2>
 <form method="POST" action="cdbts">
     <table border="1">
-        <tr><td>Database Username</td><td>
-            <input type="text" name="db_username" size="20">
-        </td></tr>
-        <tr><td>Database Password</td><td>
-            <input type="password" name="db_password" size="20">
-        </td></tr>
-        <tr><td>Database Name</td><td>
-            <input type="text" name="db_name" size="20">
-        </td></tr>
-        <tr><td>Table Name</td><td>
-            <input type="text" name="db_table_name" size="20">
-        </td></tr>
+        <tr>
+            <td>Database Username</td>
+            <td>
+                <input type="text" name="db_username" size="20">
+            </td>
+        </tr>
+        <tr>
+            <td>Database Password</td>
+            <td>
+                <input type="password" name="db_password" size="20">
+            </td>
+        </tr>
+        <tr>
+            <td>Database Name</td>
+            <td>
+                <input type="text" name="db_name" size="20">
+            </td>
+        </tr>
+        <tr>
+            <td>Table Name</td>
+            <td>
+                <input type="text" name="db_table_name" size="20">
+            </td>
+        </tr>
+        <tr>
+            <td>Columns</td>
+            <td>
+                <input type="text" name="db_column_number" size="20">
+            </td>
+        </tr>
         <tr>
             <td><input type="Submit" value="Submit"></td>
         </tr>
@@ -26,3 +44,48 @@
 </form>
 </body>
 </html>
+
+<!--
+<tr>
+    <td>Name</td>
+    <td>Type</td>
+    <td>Länge/Werte</td>
+    <td>Standard</td>
+    <td>Null</td>
+    <td>Index</td>
+    <td>A_I</td>
+    <td>Kommentare</td>
+    <td>MIME-Typ</td>
+</tr>
+
+<form method="POST" action="cdbts">
+    <tr>
+        <td><input type="text" name="name"></td>
+        <td>
+            <select name="type">
+            <option value="INT">INT</option>
+            <option value="VARCHAR">VARCHAR</option>
+            <option value="TEXT">TEXT</option>
+            <option value="DATE">DATE</option>
+        </select>
+        </td>
+        <td><input type="text" name="length"></td>
+        <td><select name="standard">
+            <option value="Kein(e)">Kein(e)</option>
+            <option value="Wie definiert:">Wie definiert:</option>
+            <option value="NULL">NULL</option>
+            <option value="CURRENT_TIMESTAMP">CURRENT_TIMESTAMP</option>
+        </select></td>
+        <td><input type="checkbox" value="null" name="nullCheck"></td>
+        <td><select name="index">
+            <option value="nothing">---</option>
+            <option value="PRIMARY">PRIMARY</option>
+            <option value="UNIQUE">UNIQUE</option>
+            <option value="INDEX">INDEX</option>
+            <option value="FULLTEXT">FULLTEXT</option>
+        </select></td>
+        <td><input type="text" name="comment"></td>
+
+
+</form>
+-->
